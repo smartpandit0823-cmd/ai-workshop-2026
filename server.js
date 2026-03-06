@@ -591,8 +591,8 @@ app.post('/api/razorpay-webhook', async (req, res) => {
 // ==========================================
 app.get('/api/admin/registrations', adminAuth, async (req, res) => {
     try {
-        // Exclude pending (abandoned checkouts) so admin only sees real data
-        const registrations = await Registration.find({ status: { $ne: 'pending' } }).sort({ createdAt: -1 });
+        // ONLY GET SUCCESSFUL PAYMENTS
+        const registrations = await Registration.find({ status: 'confirmed' }).sort({ createdAt: -1 });
         res.json({ success: true, data: registrations });
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch registrations' });
@@ -605,7 +605,8 @@ app.get('/api/admin/registrations', adminAuth, async (req, res) => {
 // ==========================================
 app.get('/api/admin/pitches', adminAuth, async (req, res) => {
     try {
-        const pitches = await Pitch.find().sort({ createdAt: -1 });
+        // ONLY GET SUCCESSFUL PAYMENTS
+        const pitches = await Pitch.find({ paymentStatus: 'confirmed' }).sort({ createdAt: -1 });
         res.json({ success: true, data: pitches });
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch pitches' });
