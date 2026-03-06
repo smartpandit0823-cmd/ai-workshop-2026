@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumbh Mela 2027 AI Idea Challenge — AI Future Workshop 2026</title>
+    <meta name="description"
+        content="Submit your innovative AI ideas for Kumbh Mela 2027 Nashik. Pay ₹199 registration + upload pitch deck. Win mentorship!">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .kumbh-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kumbh-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            z-index: -1;
+            filter: blur(3px);
+        }
+
+        .kumbh-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(10, 0, 24, 0.3) 0%, rgba(10, 0, 24, 0.95) 100%);
+            z-index: -1;
+        }
+
+        .kumbh-hero-badge {
+            display: inline-flex;
+            padding: 0.4rem 1.5rem;
+            background: var(--gold);
+            color: #3D2000;
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .kumbh-hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .kumbh-hero-sub {
+            font-size: 1.1rem;
+            color: #FFC875;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .kumbh-hero-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .pitch-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            background: rgba(17, 0, 37, 0.6);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-section-header {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 0, 24, 0.8);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+            outline: none;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group textarea::placeholder {
+            color: rgba(176, 168, 192, 0.5);
+        }
+
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+        }
+
+        .form-group input:focus {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15) !important;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 0, 24, 0.8);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group select option {
+            background: #110025;
+            color: var(--white);
+        }
+
+        .member-block {
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-block-title {
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gold);
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .form-checkbox label {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            cursor: pointer;
+        }
+
+        .pitch-submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-gold);
+            color: #3D2000;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            box-shadow: var(--glow-gold);
+            min-height: 56px;
+        }
+
+        .pitch-submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+        }
+
+        .pitch-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .next-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .next-step-card {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .next-step-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .next-step-num {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .next-step-text {
+            font-size: 0.9rem;
+            color: var(--text-body);
+        }
+
+        .pitch-slides {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .pitch-slide {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .pitch-slide:hover {
+            border-color: var(--gold);
+        }
+
+        .slide-num {
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .slide-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .deadline-box {
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 68, 68, 0.05));
+            border: 2px solid rgba(255, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .deadline-label {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            color: var(--warning-red);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .deadline-date {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--white);
+        }
+
+        /* File upload area */
+        .file-drop-zone {
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 215, 0, 0.03);
+        }
+
+        .file-drop-zone:hover {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.06);
+        }
+
+        .file-drop-zone.has-file {
+            border-color: var(--green);
+            background: rgba(57, 255, 20, 0.05);
+        }
+
+        .file-drop-zone .file-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-drop-zone .file-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .file-drop-zone .file-name {
+            font-size: 0.85rem;
+            color: var(--green);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
+
+        .payment-notice {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .payment-notice-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-notice-desc {
+            font-size: 0.9rem;
+            color: #FFC875;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-logo">AI FUTURE 2026</a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="speakers.html">Speakers</a>
+            <a href="register.html">Register</a>
+            <a href="contact.html">Contact</a>
+            <a href="register.html" class="nav-register-btn">Register ₹199</a>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </nav>
+
+    <!-- Kumbh Mela Hero -->
+    <section class="kumbh-hero">
+        <img src="assets/images/kumbh-mela.png" alt="Kumbh Mela 2027 Nashik" class="kumbh-hero-bg" loading="eager">
+        <div class="kumbh-hero-overlay"></div>
+        <div style="position: relative; z-index: 2;">
+            <div class="kumbh-hero-badge">🏆 SPECIAL CHALLENGE</div>
+            <h1 class="kumbh-hero-title">KUMBH MELA 2027<br>AI IDEA CHALLENGE</h1>
+            <p class="kumbh-hero-sub">Pitch your innovative AI & Technology ideas for Nashik Kumbh Mela 2027</p>
+            <p class="kumbh-hero-desc">
+                Submit innovative ideas using AI, Technology, or Digital Solutions to improve Kumbh Mela 2027 Nashik.
+                Selected teams present at the workshop. <strong style="color: var(--gold);">₹199 registration fee
+                    required.</strong>
+            </p>
+            <a href="#pitch-form" class="cta-btn" style="background: var(--gradient-gold); color: #3D2000;">📝 Submit
+                Your Idea — ₹199</a>
+        </div>
+    </section>
+
+    <!-- Innovation Tracks -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag" style="border-color: rgba(255, 215, 0, 0.3); color: var(--gold);">💡 Challenge
+                    Areas</div>
+                <h2 class="section-title"
+                    style="background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text;">
+                    INNOVATION TRACKS</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll" style="border-color: rgba(255, 215, 0, 0.15);">
+                    <div class="feature-icon"
+                        style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.2);">🎯</div>
+                    <h3 class="feature-title">Crowd Management AI</h3>
+                    <p class="feature-desc">AI systems for real-time crowd density prediction and stampede prevention.
+                    </p>
+                </div>
+                <div class="feature-card animate-on-scroll delay-1" style="border-color: rgba(255, 215, 0, 0.15);">
+                    <div class="feature-icon"
+                        style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.2);">🙏</div>
+                    <h3 class="feature-title">Pilgrim Services</h3>
+                    <p class="feature-desc">Digital platforms for registration, accommodation, and multilingual guides.
+                    </p>
+                </div>
+                <div class="feature-card animate-on-scroll delay-2" style="border-color: rgba(255, 215, 0, 0.15);">
+                    <div class="feature-icon"
+                        style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.2);">🤖</div>
+                    <h3 class="feature-title">AI Assistants</h3>
+                    <p class="feature-desc">Voice-powered AI assistants for navigation and emergency alerts.</p>
+                </div>
+                <div class="feature-card animate-on-scroll delay-3" style="border-color: rgba(255, 215, 0, 0.15);">
+                    <div class="feature-icon"
+                        style="background: rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.2);">📱</div>
+                    <h3 class="feature-title">Digital Visitor Tools</h3>
+                    <p class="feature-desc">AR temple tours, digital darshan, and real-time event updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deadline + Payment Notice -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-container">
+            <div class="deadline-box animate-on-scroll">
+                <div class="deadline-label">📅 SUBMISSION DEADLINE</div>
+                <div class="deadline-date">15 March 2026</div>
+            </div>
+            <div class="payment-notice animate-on-scroll">
+                <div class="payment-notice-title">💳 Registration Fee: ₹199</div>
+                <div class="payment-notice-desc">Pay ₹199 via Razorpay to submit your pitch deck. Only paid submissions
+                    will be reviewed by our team.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PITCH FORM -->
+    <section class="section" id="pitch-form" style="padding-top: 0;">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag" style="border-color: rgba(255, 215, 0, 0.3); color: var(--gold);">📝 Submit
+                </div>
+                <h2 class="section-title"
+                    style="background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text;">
+                    PITCH DECK SUBMISSION</h2>
+            </div>
+            <div class="pitch-form-container">
+                <form id="pitchForm">
+                    <!-- Section 1: Team -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">👥 SECTION 1 — TEAM DETAILS</div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Team Name *</label><input type="text" id="teamName"
+                                    placeholder="e.g. AI Innovators" required></div>
+                            <div class="form-group"><label>Team Leader Name *</label><input type="text" id="leaderName"
+                                    placeholder="e.g. Rahul Sharma" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Leader Phone *</label><input type="tel" id="leaderPhone"
+                                    placeholder="e.g. 9876543210" required></div>
+                            <div class="form-group"><label>Leader Email *</label><input type="email" id="leaderEmail"
+                                    placeholder="e.g. rahul@email.com" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>College / Organization *</label><input type="text"
+                                    id="pitchCollege" placeholder="e.g. Sanjivani University" required></div>
+                            <div class="form-group"><label>City *</label><input type="text" id="pitchCity"
+                                    placeholder="e.g. Nashik" required></div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Members -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">👨‍💻 SECTION 2 — TEAM MEMBERS (Max 4)</div>
+                        <div class="member-block">
+                            <div class="member-block-title">MEMBER 1 (LEADER)</div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Name</label><input type="text" id="m1Name" required>
+                                </div>
+                                <div class="form-group"><label>Role</label><select id="m1Role">
+                                        <option value="">Select Role</option>
+                                        <option>AI Developer</option>
+                                        <option>Backend Developer</option>
+                                        <option>UI Designer</option>
+                                        <option>Researcher</option>
+                                        <option>Project Lead</option>
+                                        <option>Other</option>
+                                    </select></div>
+                            </div>
+                        </div>
+                        <div class="member-block">
+                            <div class="member-block-title">MEMBER 2 (OPTIONAL)</div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Name</label><input type="text" id="m2Name"></div>
+                                <div class="form-group"><label>Role</label><select id="m2Role">
+                                        <option value="">Select</option>
+                                        <option>AI Developer</option>
+                                        <option>Backend Developer</option>
+                                        <option>UI Designer</option>
+                                        <option>Researcher</option>
+                                        <option>Other</option>
+                                    </select></div>
+                            </div>
+                        </div>
+                        <div class="member-block">
+                            <div class="member-block-title">MEMBER 3 (OPTIONAL)</div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Name</label><input type="text" id="m3Name"></div>
+                                <div class="form-group"><label>Role</label><select id="m3Role">
+                                        <option value="">Select</option>
+                                        <option>AI Developer</option>
+                                        <option>Backend Developer</option>
+                                        <option>UI Designer</option>
+                                        <option>Researcher</option>
+                                        <option>Other</option>
+                                    </select></div>
+                            </div>
+                        </div>
+                        <div class="member-block">
+                            <div class="member-block-title">MEMBER 4 (OPTIONAL)</div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Name</label><input type="text" id="m4Name"></div>
+                                <div class="form-group"><label>Role</label><select id="m4Role">
+                                        <option value="">Select</option>
+                                        <option>AI Developer</option>
+                                        <option>Backend Developer</option>
+                                        <option>UI Designer</option>
+                                        <option>Researcher</option>
+                                        <option>Other</option>
+                                    </select></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Idea -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">💡 SECTION 3 — IDEA DETAILS</div>
+                        <div class="form-group"><label>Project / Idea Name *</label><input type="text" id="ideaName"
+                                placeholder="e.g. AI Crowd Prediction System" required></div>
+                        <div class="form-group"><label>Problem Statement *</label><textarea id="problemStatement"
+                                placeholder="Explain the problem..." required></textarea></div>
+                        <div class="form-group"><label>Proposed Solution *</label><textarea id="proposedSolution"
+                                placeholder="Explain your idea..." required></textarea></div>
+                        <div class="form-group"><label>Target Users *</label><input type="text" id="targetUsers"
+                                placeholder="e.g. Pilgrims, Police" required></div>
+                        <div class="form-group"><label>Technology Used *</label><input type="text" id="techUsed"
+                                placeholder="e.g. AI, Mobile App, Cloud" required></div>
+                        <div class="form-group"><label>Expected Impact *</label><textarea id="expectedImpact"
+                                placeholder="e.g. Improve crowd safety..." required></textarea></div>
+                    </div>
+
+                    <!-- Section 4: File Upload -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">📎 SECTION 4 — PITCH DECK UPLOAD</div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Upload your pitch
+                            deck (PDF/PPT/PPTX). Max 10 slides, under 20MB.</p>
+                        <div class="file-drop-zone" id="fileDropZone"
+                            onclick="document.getElementById('pitchFileInput').click()">
+                            <div class="file-icon">📂</div>
+                            <div class="file-text">Click to select file or drag & drop<br><small>PDF, PPT, PPTX, DOC,
+                                    DOCX (Max 20MB)</small></div>
+                            <div class="file-name" id="fileName" style="display:none;"></div>
+                        </div>
+                        <input type="file" id="pitchFileInput" class="file-input-hidden"
+                            accept=".pdf,.ppt,.pptx,.doc,.docx">
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">📌 File name format:
+                            <strong style="color: var(--gold);">TeamName_KumbhIdea.pdf</strong></p>
+                    </div>
+
+                    <!-- Section 5: Summary -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">📊 SECTION 5 — SHORT IDEA SUMMARY</div>
+                        <div class="form-group"><label>Summary (2-3 sentences) *</label><textarea id="ideaSummary"
+                                placeholder="Our AI-based system analyzes crowd movement..." required></textarea></div>
+                    </div>
+
+                    <!-- Declaration + Submit -->
+                    <div class="form-section animate-on-scroll">
+                        <div class="form-section-header">⭐ DECLARATION</div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="declaration" required>
+                            <label for="declaration">We confirm that this idea is original and created by our
+                                team.</label>
+                        </div>
+                        <button type="submit" class="pitch-submit-btn" id="pitchPayBtn">
+                            💳 Pay ₹199 & Submit Pitch Deck
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Happens Next + Pitch Format -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title"
+                    style="background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text;">WHAT
+                    HAPPENS NEXT?</h2>
+            </div>
+            <div class="next-steps">
+                <div class="next-step-card animate-on-scroll">
+                    <div class="next-step-num">1️⃣</div>
+                    <div class="next-step-text">Team reviews all pitch decks</div>
+                </div>
+                <div class="next-step-card animate-on-scroll delay-1">
+                    <div class="next-step-num">2️⃣</div>
+                    <div class="next-step-text">Top teams selected</div>
+                </div>
+                <div class="next-step-card animate-on-scroll delay-2">
+                    <div class="next-step-num">3️⃣</div>
+                    <div class="next-step-text">Selected teams present at workshop</div>
+                </div>
+            </div>
+            <div style="margin-top: 4rem;">
+                <div class="section-header">
+                    <h2 class="section-title"
+                        style="background: var(--gradient-gold); -webkit-background-clip: text; background-clip: text;">
+                        PITCH DECK FORMAT</h2>
+                    <p class="section-desc">Create a 10-slide pitch deck:</p>
+                </div>
+                <div class="pitch-slides">
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 1</div>
+                        <div class="slide-label">Title & Team</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 2</div>
+                        <div class="slide-label">Problem</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 3</div>
+                        <div class="slide-label">Challenges</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 4</div>
+                        <div class="slide-label">Solution</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 5</div>
+                        <div class="slide-label">How it Works</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 6</div>
+                        <div class="slide-label">Technology</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 7</div>
+                        <div class="slide-label">Impact</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 8</div>
+                        <div class="slide-label">Implementation</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 9</div>
+                        <div class="slide-label">Future Potential</div>
+                    </div>
+                    <div class="pitch-slide">
+                        <div class="slide-num">SLIDE 10</div>
+                        <div class="slide-label">Conclusion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">AI FUTURE WORKSHOP 2026</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a><a href="about.html">About</a><a href="schedule.html">Schedule</a>
+            <a href="speakers.html">Speakers</a><a href="kumbh-mela.html">Kumbh Mela</a>
+            <a href="register.html">Register</a><a href="contact.html">Contact</a>
+        </div>
+        <p class="footer-copy">© 2026 AI Future Workshop. All rights reserved.</p>
+        <div class="footer-orgs"><span>Samartha Institute</span><span>×</span><span>SanatanSetu</span></div>
+    </footer>
+
+    <button class="floating-register" id="floatingRegister" onclick="window.location.href='register.html'">🚀 Register
+        ₹199</button>
+
+    <!-- Razorpay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        const API_BASE = window.location.origin;
+        let uploadedFile = null;
+        let uploadedFileData = null; // { url, key, originalName }
+
+        // File input handler
+        const fileInput = document.getElementById('pitchFileInput');
+        const dropZone = document.getElementById('fileDropZone');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 20 * 1024 * 1024) {
+                    alert('File too large! Max 20MB');
+                    return;
+                }
+                uploadedFile = file;
+                document.getElementById('fileName').textContent = '📄 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+                document.getElementById('fileName').style.display = 'block';
+                dropZone.classList.add('has-file');
+                dropZone.querySelector('.file-text').textContent = 'File selected! Click to change.';
+            }
+        });
+
+        // Drag & drop
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--gold)'; });
+        dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '';
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Form submission
+        document.getElementById('pitchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!uploadedFile) {
+                alert('⚠️ Please upload your pitch deck file!');
+                return;
+            }
+
+            const btn = document.getElementById('pitchPayBtn');
+            btn.textContent = '⏳ Uploading file...';
+            btn.disabled = true;
+
+            try {
+                // Step 1: Upload file to S3
+                const formData = new FormData();
+                formData.append('pitchDeck', uploadedFile);
+
+                const uploadRes = await fetch(`${API_BASE}/api/pitch/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const uploadData = await uploadRes.json();
+
+                if (!uploadData.success) throw new Error('File upload failed');
+                uploadedFileData = uploadData;
+
+                // Step 2: Create Razorpay order
+                btn.textContent = '⏳ Creating order...';
+                const orderRes = await fetch(`${API_BASE}/api/pitch/create-order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        teamName: document.getElementById('teamName').value,
+                        leaderName: document.getElementById('leaderName').value,
+                        leaderEmail: document.getElementById('leaderEmail').value,
+                        leaderPhone: document.getElementById('leaderPhone').value
+                    })
+                });
+                const orderData = await orderRes.json();
+                if (!orderData.success) throw new Error('Order creation failed');
+
+                // Step 3: Open Razorpay
+                btn.textContent = '⏳ Opening payment...';
+                const options = {
+                    key: orderData.key,
+                    amount: orderData.amount,
+                    currency: orderData.currency,
+                    name: "Kumbh Mela 2027 Challenge",
+                    description: "Pitch Deck Submission — ₹199",
+                    order_id: orderData.order_id,
+                    handler: function (response) {
+                        submitPitchAfterPayment(response, orderData.order_id);
+                    },
+                    prefill: {
+                        name: document.getElementById('leaderName').value,
+                        email: document.getElementById('leaderEmail').value,
+                        contact: document.getElementById('leaderPhone').value
+                    },
+                    theme: { color: "#4B0082" },
+                    modal: {
+                        ondismiss: function () {
+                            btn.textContent = '💳 Pay ₹199 & Submit Pitch Deck';
+                            btn.disabled = false;
+                        }
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function () {
+                    btn.textContent = '💳 Pay ₹199 & Submit Pitch Deck';
+                    btn.disabled = false;
+                    alert('Payment failed. Please try again.');
+                });
+                rzp.open();
+
+            } catch (error) {
+                console.error(error);
+                btn.textContent = '💳 Pay ₹199 & Submit Pitch Deck';
+                btn.disabled = false;
+                alert('Something went wrong: ' + error.message);
+            }
+        });
+
+        // Step 4: Submit pitch data after successful payment
+        async function submitPitchAfterPayment(razorpayResponse, orderId) {
+            const btn = document.getElementById('pitchPayBtn');
+            btn.textContent = '⏳ Saving submission...';
+
+            try {
+                const pitchData = {
+                    razorpay_order_id: razorpayResponse.razorpay_order_id,
+                    razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+                    razorpay_signature: razorpayResponse.razorpay_signature,
+                    teamName: document.getElementById('teamName').value,
+                    leaderName: document.getElementById('leaderName').value,
+                    leaderPhone: document.getElementById('leaderPhone').value,
+                    leaderEmail: document.getElementById('leaderEmail').value,
+                    college: document.getElementById('pitchCollege').value,
+                    city: document.getElementById('pitchCity').value,
+                    members: [
+                        { name: document.getElementById('m1Name').value, role: document.getElementById('m1Role').value },
+                        { name: document.getElementById('m2Name').value, role: document.getElementById('m2Role').value },
+                        { name: document.getElementById('m3Name').value, role: document.getElementById('m3Role').value },
+                        { name: document.getElementById('m4Name').value, role: document.getElementById('m4Role').value },
+                    ].filter(m => m.name),
+                    ideaName: document.getElementById('ideaName').value,
+                    problemStatement: document.getElementById('problemStatement').value,
+                    proposedSolution: document.getElementById('proposedSolution').value,
+                    targetUsers: document.getElementById('targetUsers').value,
+                    techUsed: document.getElementById('techUsed').value,
+                    expectedImpact: document.getElementById('expectedImpact').value,
+                    ideaSummary: document.getElementById('ideaSummary').value,
+                    pitchDeckUrl: uploadedFileData.url,
+                    pitchDeckKey: uploadedFileData.key,
+                    pitchDeckOriginalName: uploadedFileData.originalName
+                };
+
+                const res = await fetch(`${API_BASE}/api/pitch/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pitchData)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    btn.textContent = '✅ Submitted Successfully!';
+                    btn.style.background = '#39FF14';
+                    btn.style.color = '#000';
+                    alert('🎉 Pitch deck submitted successfully! Our team will review your idea and contact you.');
+
+                    // Open WhatsApp
+                    const msg = encodeURIComponent(`Hello! Team "${pitchData.teamName}" submitted pitch for Kumbh Mela 2027.\nIdea: ${pitchData.ideaName}\nLeader: ${pitchData.leaderName}\nPayment: ${razorpayResponse.razorpay_payment_id}`);
+                    window.open(`https://wa.me/918421116801?text=${msg}`, '_blank');
+                }
+            } catch (error) {
+                console.error(error);
+                btn.textContent = '✅ Payment Done! Contact support.';
+                alert('Payment successful but submission had an issue. Please WhatsApp your details to 8421116801');
+            }
+        }
+    </script>
+</body>
+
+</html>

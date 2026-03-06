@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — AI Future Workshop 2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Exo+2:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --purple: #7B2FBE;
+            --purple-dark: #4B0082;
+            --gold: #FFD700;
+            --cyan: #00F5FF;
+            --green: #39FF14;
+            --red: #FF4444;
+            --dark: #0a0018;
+            --card: #110025;
+            --white: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--white);
+            font-family: 'Exo 2', sans-serif;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(123, 47, 190, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(123, 47, 190, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* LOGIN */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: rgba(17, 0, 37, 0.9);
+            border: 2px solid rgba(123, 47, 190, 0.3);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-sub {
+            color: rgba(176, 168, 192, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(10, 0, 24, 0.8);
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .login-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--gold), #FFA500);
+            color: #3D2000;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .login-error {
+            color: var(--red);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            display: none;
+        }
+
+        .top-bar {
+            background: rgba(17, 0, 37, 0.95);
+            border-bottom: 1px solid rgba(123, 47, 190, 0.2);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .top-bar-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .top-bar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .refresh-btn,
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn {
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: var(--cyan);
+        }
+
+        .refresh-btn:hover {
+            background: rgba(0, 245, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: var(--red);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 68, 68, 0.2);
+        }
+
+        .dash-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* STATS CARDS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(17, 0, 37, 0.6);
+            border: 1px solid rgba(123, 47, 190, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .stat-card-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-card-label {
+            font-size: 0.8rem;
+            color: rgba(176, 168, 192, 0.7);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .val-green {
+            color: var(--green);
+        }
+
+        .val-gold {
+            color: var(--gold);
+        }
+
+        .val-cyan {
+            color: var(--cyan);
+        }
+
+        .val-purple {
+            color: #C77DFF;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(17, 0, 37, 0.6);
+            border: 1px solid rgba(123, 47, 190, 0.2);
+            border-radius: 10px;
+            color: rgba(176, 168, 192, 0.7);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: rgba(123, 47, 190, 0.2);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        /* TABLE */
+        .table-container {
+            background: rgba(17, 0, 37, 0.6);
+            border: 1px solid rgba(123, 47, 190, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(123, 47, 190, 0.15);
+        }
+
+        .table-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+
+        .table-count {
+            font-size: 0.8rem;
+            color: var(--cyan);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            background: rgba(123, 47, 190, 0.08);
+            color: rgba(176, 168, 192, 0.7);
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 0.8rem 1rem;
+            border-top: 1px solid rgba(123, 47, 190, 0.08);
+            color: var(--white);
+            vertical-align: middle;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(123, 47, 190, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .status-confirmed {
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+        }
+
+        .status-pending {
+            background: rgba(255, 165, 0, 0.15);
+            color: #FFA500;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+        }
+
+        .status-submitted {
+            background: rgba(0, 245, 255, 0.15);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .status-under_review {
+            background: rgba(255, 215, 0, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .status-selected {
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+        }
+
+        .status-rejected {
+            background: rgba(255, 68, 68, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
+        .action-btn {
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            border: none;
+            background: rgba(123, 47, 190, 0.2);
+            color: #C77DFF;
+            transition: all 0.2s;
+            margin: 0 2px;
+        }
+
+        .action-btn:hover {
+            background: rgba(123, 47, 190, 0.4);
+        }
+
+        .action-btn.dl {
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--cyan);
+        }
+
+        .action-btn.dl:hover {
+            background: rgba(0, 245, 255, 0.2);
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #110025;
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(10, 0, 24, 0.8);
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+
+        .modal-select option {
+            background: #110025;
+        }
+
+        .modal-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(10, 0, 24, 0.8);
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 0.9rem;
+            min-height: 80px;
+            resize: vertical;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(176, 168, 192, 0.7);
+        }
+
+        .modal-btn.save {
+            background: var(--gold);
+            color: #3D2000;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(176, 168, 192, 0.5);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--cyan);
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 0.8rem 1rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .top-bar-title {
+                font-size: 0.7rem;
+                letter-spacing: 1px;
+            }
+
+            .dash-content {
+                padding: 0.8rem;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+
+            .stat-card {
+                padding: 0.8rem;
+            }
+
+            .stat-card-value {
+                font-size: 1.3rem;
+            }
+
+            .stat-card-label {
+                font-size: 0.65rem;
+            }
+
+            .tabs {
+                gap: 0.3rem;
+            }
+
+            .tab-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+
+            .data-table {
+                font-size: 0.75rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem 0.6rem;
+            }
+
+            .modal-box {
+                padding: 1.5rem;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .detail-modal-box {
+                padding: 1.2rem;
+                max-height: 92vh;
+            }
+
+            .refresh-btn,
+            .logout-btn {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* PITCH DETAIL MODAL */
+        .detail-modal-box {
+            background: #110025;
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .detail-modal-box::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .detail-modal-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .detail-modal-box::-webkit-scrollbar-thumb {
+            background: var(--purple);
+            border-radius: 4px;
+        }
+
+        .detail-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(123, 47, 190, 0.15);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .detail-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .detail-label {
+            color: rgba(176, 168, 192, 0.7);
+            min-width: 110px;
+            flex-shrink: 0;
+        }
+
+        .detail-value {
+            color: var(--white);
+            word-break: break-word;
+        }
+
+        .detail-close-btn {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+
+        .detail-close-btn:hover {
+            background: rgba(255, 68, 68, 0.2);
+        }
+
+        .member-chip {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: rgba(0, 245, 255, 0.08);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            margin: 0.2rem;
+        }
+
+        .detail-text-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+            color: var(--white);
+            line-height: 1.5;
+            margin-top: 0.3rem;
+        }
+
+        .action-btn.view {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+        }
+
+        .action-btn.view:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔐</div>
+            <div class="login-title">ADMIN PANEL</div>
+            <div class="login-sub">AI Future Workshop 2026</div>
+            <input type="password" class="login-input" id="adminPassword" placeholder="Enter admin password"
+                onkeypress="if(event.key==='Enter')adminLogin()">
+            <button class="login-btn" onclick="adminLogin()">🔓 LOGIN</button>
+            <div class="login-error" id="loginError">❌ Wrong password. Try again.</div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-title">🤖 ADMIN — AI FUTURE WORKSHOP</div>
+            <div class="top-bar-actions">
+                <button class="refresh-btn" onclick="loadDashboard()">🔄 Refresh</button>
+                <button class="logout-btn" onclick="adminLogout()">🚪 Logout</button>
+            </div>
+        </div>
+
+        <div class="dash-content">
+            <!-- Stats Row -->
+            <div class="stats-row" id="statsRow">
+                <div class="stat-card">
+                    <div class="stat-card-value val-green" id="statReg">—</div>
+                    <div class="stat-card-label">Registrations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value val-gold" id="statRevenue">—</div>
+                    <div class="stat-card-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value val-cyan" id="statPitches">—</div>
+                    <div class="stat-card-label">Pitch Decks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value val-purple" id="statSelected">—</div>
+                    <div class="stat-card-label">Selected Teams</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" style="color: #FF1493;" id="statVisitors">—</div>
+                    <div class="stat-card-label">Website Visitors</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('registrations')">📋 Registrations</button>
+                <button class="tab-btn" onclick="switchTab('pitches')">📎 Pitch Decks</button>
+            </div>
+
+            <!-- Registrations Table -->
+            <div id="registrationsTab">
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">📋 All Registrations</div>
+                        <div class="table-count" id="regCount">Loading...</div>
+                    </div>
+                    <div class="table-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>College</th>
+                                    <th>Profession</th>
+                                    <th>Payment ID</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="regTableBody">
+                                <tr>
+                                    <td colspan="9" class="loading">⏳ Loading registrations...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pitches Table -->
+            <div id="pitchesTab" style="display:none;">
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">📎 Pitch Deck Submissions</div>
+                        <div class="table-count" id="pitchCount">Loading...</div>
+                    </div>
+                    <div class="table-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Team</th>
+                                    <th>Leader</th>
+                                    <th>Phone</th>
+                                    <th>Idea</th>
+                                    <th>College</th>
+                                    <th>Members</th>
+                                    <th>File</th>
+                                    <th>Payment</th>
+                                    <th>Review</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pitchTableBody">
+                                <tr>
+                                    <td colspan="11" class="loading">⏳ Loading pitches...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-box">
+            <div class="modal-title">📝 Update Pitch Status</div>
+            <input type="hidden" id="modalPitchId">
+            <label
+                style="font-size: 0.8rem; color: rgba(176,168,192,0.7); display: block; margin-bottom: 0.3rem;">Review
+                Status</label>
+            <select class="modal-select" id="modalStatus">
+                <option value="submitted">📩 Submitted</option>
+                <option value="under_review">🔍 Under Review</option>
+                <option value="selected">✅ Selected</option>
+                <option value="rejected">❌ Rejected</option>
+            </select>
+            <label
+                style="font-size: 0.8rem; color: rgba(176,168,192,0.7); display: block; margin-bottom: 0.3rem;">Review
+                Notes</label>
+            <textarea class="modal-textarea" id="modalNotes"
+                placeholder="Optional notes about this pitch..."></textarea>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn save" onclick="savePitchStatus()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pitch Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="detail-modal-box">
+            <button class="detail-close-btn" onclick="closeDetailModal()">✕ Close</button>
+            <div id="detailContent">
+                <p style="text-align:center; color: var(--cyan);">⏳ Loading pitch details...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = window.location.origin;
+        let TOKEN = localStorage.getItem('admin_token') || '';
+
+        // Auto-login if token exists
+        if (TOKEN) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            loadDashboard();
+        }
+
+        // ========== LOGIN ==========
+        async function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            try {
+                const res = await fetch(`${API}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    TOKEN = data.token;
+                    localStorage.setItem('admin_token', TOKEN);
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    loadDashboard();
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (e) {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function adminLogout() {
+            TOKEN = '';
+            localStorage.removeItem('admin_token');
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        // ========== HEADERS ==========
+        function authHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TOKEN}`
+            };
+        }
+
+        // ========== LOAD DASHBOARD ==========
+        async function loadDashboard() {
+            try {
+                await Promise.all([loadStats(), loadRegistrations(), loadPitches()]);
+            } catch (e) {
+                if (e.message.includes('401') || e.message.includes('token')) {
+                    adminLogout();
+                }
+            }
+        }
+
+        // ========== LOAD STATS ==========
+        async function loadStats() {
+            const res = await fetch(`${API}/api/admin/stats`, { headers: authHeaders() });
+            if (!res.ok) throw new Error(res.status);
+            const data = await res.json();
+
+            document.getElementById('statReg').textContent = data.registrations.total;
+            document.getElementById('statRevenue').textContent = '₹' + data.totalRevenue.toLocaleString();
+            document.getElementById('statPitches').textContent = data.pitches.total;
+            document.getElementById('statSelected').textContent = data.pitches.selected;
+            document.getElementById('statVisitors').textContent = data.visitors.toLocaleString();
+        }
+
+        // ========== LOAD REGISTRATIONS ==========
+        async function loadRegistrations() {
+            const res = await fetch(`${API}/api/admin/registrations`, { headers: authHeaders() });
+            if (!res.ok) throw new Error(res.status);
+            const data = await res.json();
+
+            document.getElementById('regCount').textContent = `${data.data.length} total`;
+
+            if (data.data.length === 0) {
+                document.getElementById('regTableBody').innerHTML = '<tr><td colspan="9" class="empty-state">No registrations yet</td></tr>';
+                return;
+            }
+
+            let html = '';
+            data.data.forEach((r, i) => {
+                html += `<tr>
+                <td>${i + 1}</td>
+                <td><strong>${r.name}</strong></td>
+                <td>${r.email}</td>
+                <td><a href="tel:${r.phone}" style="color:var(--cyan);text-decoration:none;">${r.phone}</a></td>
+                <td>${r.college}</td>
+                <td>${r.profession || '—'}</td>
+                <td style="font-size:0.7rem;color:var(--cyan);">${r.razorpay_payment_id || '—'}</td>
+                <td><span class="status-badge status-${r.status}">${r.status}</span></td>
+                <td style="font-size:0.75rem;color:rgba(176,168,192,0.5);">${new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+            </tr>`;
+            });
+            document.getElementById('regTableBody').innerHTML = html;
+        }
+
+        // ========== LOAD PITCHES ==========
+        async function loadPitches() {
+            const res = await fetch(`${API}/api/admin/pitches`, { headers: authHeaders() });
+            if (!res.ok) throw new Error(res.status);
+            const data = await res.json();
+
+            document.getElementById('pitchCount').textContent = `${data.data.length} total`;
+
+            if (data.data.length === 0) {
+                document.getElementById('pitchTableBody').innerHTML = '<tr><td colspan="11" class="empty-state">No pitches yet</td></tr>';
+                return;
+            }
+
+            let html = '';
+            data.data.forEach((p, i) => {
+                const memberCount = p.members ? p.members.filter(m => m.name).length : 0;
+                html += `<tr style="cursor:pointer;" onclick="viewPitchDetail('${p._id}')">
+                <td>${i + 1}</td>
+                <td><strong>${p.teamName}</strong></td>
+                <td>${p.leaderName}<br><span style="font-size:0.7rem;color:rgba(176,168,192,0.5);">${p.leaderEmail}</span></td>
+                <td><a href="tel:${p.leaderPhone}" style="color:var(--cyan);text-decoration:none;" onclick="event.stopPropagation()">${p.leaderPhone}</a></td>
+                <td>${p.ideaName}</td>
+                <td>${p.college}, ${p.city}</td>
+                <td>${memberCount}</td>
+                <td>${p.pitchDeckKey ? `<button class="action-btn dl" onclick="event.stopPropagation();downloadPitch('${p._id}')">📥</button>` : '—'}</td>
+                <td><span class="status-badge status-${p.paymentStatus}">${p.paymentStatus}</span></td>
+                <td><span class="status-badge status-${p.reviewStatus}">${p.reviewStatus.replace('_', ' ')}</span></td>
+                <td>
+                    <button class="action-btn view" onclick="event.stopPropagation();viewPitchDetail('${p._id}')">👁 View</button>
+                    <button class="action-btn" onclick="event.stopPropagation();openStatusModal('${p._id}', '${p.reviewStatus}', '${(p.reviewNotes || '').replace(/'/g, "\\'")}')">✏️</button>
+                </td>
+            </tr>`;
+            });
+            document.getElementById('pitchTableBody').innerHTML = html;
+        }
+
+        // ========== TABS ==========
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('registrationsTab').style.display = tab === 'registrations' ? 'block' : 'none';
+            document.getElementById('pitchesTab').style.display = tab === 'pitches' ? 'block' : 'none';
+        }
+
+        // ========== PITCH STATUS MODAL ==========
+        function openStatusModal(id, status, notes) {
+            document.getElementById('modalPitchId').value = id;
+            document.getElementById('modalStatus').value = status;
+            document.getElementById('modalNotes').value = notes;
+            document.getElementById('statusModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('statusModal').classList.remove('active');
+        }
+
+        async function savePitchStatus() {
+            const id = document.getElementById('modalPitchId').value;
+            const reviewStatus = document.getElementById('modalStatus').value;
+            const reviewNotes = document.getElementById('modalNotes').value;
+
+            try {
+                const res = await fetch(`${API}/api/admin/pitches/${id}`, {
+                    method: 'PUT',
+                    headers: authHeaders(),
+                    body: JSON.stringify({ reviewStatus, reviewNotes })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    closeModal();
+                    loadPitches();
+                    loadStats();
+                }
+            } catch (e) {
+                alert('Failed to update status');
+            }
+        }
+
+        // ========== DOWNLOAD PITCH DECK ==========
+        async function downloadPitch(id) {
+            try {
+                const res = await fetch(`${API}/api/admin/pitch-download/${id}`, { headers: authHeaders() });
+                const data = await res.json();
+                if (data.success && data.url) {
+                    window.open(data.url, '_blank');
+                } else {
+                    alert('Failed to get download link');
+                }
+            } catch (e) {
+                alert('Download failed');
+            }
+        }
+
+        // ========== VIEW PITCH DETAIL ==========
+        async function viewPitchDetail(id) {
+            document.getElementById('detailModal').classList.add('active');
+            document.getElementById('detailContent').innerHTML = '<p style="text-align:center; color: var(--cyan); padding: 2rem;">⏳ Loading pitch details...</p>';
+
+            try {
+                const res = await fetch(`${API}/api/admin/pitches/${id}`, { headers: authHeaders() });
+                const data = await res.json();
+                if (!data.success) throw new Error('Not found');
+                const p = data.data;
+
+                const membersHtml = (p.members || []).filter(m => m.name).map(m =>
+                    `<span class="member-chip">${m.name}${m.role ? ' — ' + m.role : ''}</span>`
+                ).join('') || '<span style="color:rgba(176,168,192,0.5)">No additional members</span>';
+
+                const html = `
+                    <h2 style="font-family:'Orbitron',monospace; font-size:1.1rem; color:var(--gold); margin-bottom:1.5rem; letter-spacing:2px;">📎 ${p.teamName}</h2>
+                    
+                    <div class="detail-section">
+                        <div class="detail-section-title">👥 TEAM DETAILS</div>
+                        <div class="detail-row"><span class="detail-label">Team Name:</span><span class="detail-value"><strong>${p.teamName}</strong></span></div>
+                        <div class="detail-row"><span class="detail-label">Leader:</span><span class="detail-value">${p.leaderName}</span></div>
+                        <div class="detail-row"><span class="detail-label">Phone:</span><span class="detail-value"><a href="tel:${p.leaderPhone}" style="color:var(--cyan)">${p.leaderPhone}</a></span></div>
+                        <div class="detail-row"><span class="detail-label">Email:</span><span class="detail-value"><a href="mailto:${p.leaderEmail}" style="color:var(--cyan)">${p.leaderEmail}</a></span></div>
+                        <div class="detail-row"><span class="detail-label">College:</span><span class="detail-value">${p.college}</span></div>
+                        <div class="detail-row"><span class="detail-label">City:</span><span class="detail-value">${p.city}</span></div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">👨‍💻 TEAM MEMBERS</div>
+                        <div>${membersHtml}</div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">💡 IDEA DETAILS</div>
+                        <div class="detail-row"><span class="detail-label">Idea Name:</span><span class="detail-value"><strong style="color:var(--cyan)">${p.ideaName}</strong></span></div>
+                        <div class="detail-row"><span class="detail-label">Target Users:</span><span class="detail-value">${p.targetUsers || '—'}</span></div>
+                        <div class="detail-row"><span class="detail-label">Tech Used:</span><span class="detail-value">${p.techUsed || '—'}</span></div>
+                        
+                        <p style="color:rgba(176,168,192,0.7); font-size:0.75rem; margin-top:0.8rem; letter-spacing:1px;">PROBLEM STATEMENT</p>
+                        <div class="detail-text-block">${p.problemStatement || '—'}</div>
+                        
+                        <p style="color:rgba(176,168,192,0.7); font-size:0.75rem; margin-top:0.8rem; letter-spacing:1px;">PROPOSED SOLUTION</p>
+                        <div class="detail-text-block">${p.proposedSolution || '—'}</div>
+                        
+                        <p style="color:rgba(176,168,192,0.7); font-size:0.75rem; margin-top:0.8rem; letter-spacing:1px;">EXPECTED IMPACT</p>
+                        <div class="detail-text-block">${p.expectedImpact || '—'}</div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">📊 IDEA SUMMARY</div>
+                        <div class="detail-text-block">${p.ideaSummary || '—'}</div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-section-title">📎 FILE & PAYMENT</div>
+                        <div class="detail-row"><span class="detail-label">File:</span><span class="detail-value">${p.pitchDeckOriginalName || '—'} ${p.pitchDeckKey ? '<button class="action-btn dl" style="margin-left:0.5rem" onclick="downloadPitch(\'' + p._id + '\')">&darr; Download</button>' : ''}</span></div>
+                        <div class="detail-row"><span class="detail-label">Payment ID:</span><span class="detail-value" style="font-size:0.75rem; color:var(--cyan);">${p.razorpay_payment_id || '—'}</span></div>
+                        <div class="detail-row"><span class="detail-label">Payment:</span><span class="detail-value"><span class="status-badge status-${p.paymentStatus}">${p.paymentStatus}</span></span></div>
+                        <div class="detail-row"><span class="detail-label">Review:</span><span class="detail-value"><span class="status-badge status-${p.reviewStatus}">${p.reviewStatus.replace('_', ' ')}</span></span></div>
+                        ${p.reviewNotes ? `<div class="detail-row"><span class="detail-label">Notes:</span><span class="detail-value">${p.reviewNotes}</span></div>` : ''}
+                        <div class="detail-row"><span class="detail-label">Submitted:</span><span class="detail-value">${new Date(p.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                    </div>
+
+                    <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+                        <button class="action-btn" style="padding:0.5rem 1rem; font-size:0.8rem;" onclick="closeDetailModal();openStatusModal('${p._id}', '${p.reviewStatus}', '${(p.reviewNotes || '').replace(/'/g, "\\\\'")}')">✏️ Edit Status</button>
+                        ${p.pitchDeckKey ? `<button class="action-btn dl" style="padding:0.5rem 1rem; font-size:0.8rem;" onclick="downloadPitch('${p._id}')">📥 Download File</button>` : ''}
+                    </div>
+                `;
+                document.getElementById('detailContent').innerHTML = html;
+            } catch (e) {
+                document.getElementById('detailContent').innerHTML = '<p style="text-align:center; color:var(--red); padding:2rem;">❌ Failed to load pitch details</p>';
+            }
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+    </script>
+
+</body>
+
+</html>
