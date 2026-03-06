@@ -27,6 +27,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
+// Explicitly serve index.html for root (fixes Vercel Express zero-config issue)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Multer for file uploads (in memory)
 const upload = multer({
     storage: multer.memoryStorage(),
