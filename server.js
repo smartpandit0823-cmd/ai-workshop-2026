@@ -540,11 +540,59 @@ app.post('/api/pitch/submit', async (req, res) => {
 
 
 // ==========================================
+// API: RAZORPAY WEBHOOK (Automated Payment Tracking)
+// ==========================================
+app.post('/api/razorpay-webhook', async (req, res) => {
+    try {
+        // Razorpay sends webhook secret in headers
+        const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+        // If you haven't set a secret in Vercel/Render, just accept it for now or enforce it later
+        if (secret) {
+            const shasum = crypto.createHmac('sha256', secret);
+            shasum.update(JSON.stringify(req.body));
+            const digest = shasum.digest('hex');
+
+            if (digest !== req.headers['x-razorpay-signature']) {
+                return res.status(400).json({ error: 'Invalid signature' });
+            }
+        }
+
+        const event = req.body.event;
+        const payload = req.body.payload.payment.entity;
+        const orderId = payload.order_id; // Related order ID
+
+        if (event === 'payment.failed') {
+            // Update Registration and Pitch to mark as failed
+            await Registration.findOneAndUpdate({ razorpay_order_id: orderId }, { status: 'failed' });
+            await Pitch.findOneAndUpdate({ razorpay_order_id: orderId }, { paymentStatus: 'failed' });
+            console.log(`❌ Webhook: Payment failed for Order ${orderId}`);
+        }
+        else if (event === 'payment.authorized' || event === 'payment.captured') {
+            // Update Registration
+            const reg = await Registration.findOneAndUpdate({ razorpay_order_id: orderId }, { razorpay_payment_id: payload.id, status: 'confirmed' });
+            if (reg) sendConfirmationEmail(reg);
+
+            // Update Pitch
+            await Pitch.findOneAndUpdate({ razorpay_order_id: orderId }, { razorpay_payment_id: payload.id, paymentStatus: 'confirmed' });
+            console.log(`✅ Webhook: Payment Success for Order ${orderId}`);
+        }
+
+        res.json({ status: 'ok' });
+    } catch (err) {
+        console.error('Webhook Error:', err.message);
+        res.status(500).json({ error: 'Webhook failed' });
+    }
+});
+
+
+// ==========================================
 // API: ADMIN — GET ALL REGISTRATIONS
 // ==========================================
 app.get('/api/admin/registrations', adminAuth, async (req, res) => {
     try {
-        const registrations = await Registration.find().sort({ createdAt: -1 });
+        // Exclude pending (abandoned checkouts) so admin only sees real data
+        const registrations = await Registration.find({ status: { $ne: 'pending' } }).sort({ createdAt: -1 });
         res.json({ success: true, data: registrations });
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch registrations' });
